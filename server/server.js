@@ -29,9 +29,10 @@ io.on('connection',(socket)=>{
   //   text:'New User Joined',
   //   createdAt: new Date().getTime()
   // });
-  socket.on('createMessage',(message) => {
+  socket.on('createMessage',(message, callback) => {
   console.log('createMessage',message);
   io.emit('newMessage',generateMessage(message.from, message.text));  // another method to send data
+callback('This is from server.'); // event acknowledgements
   // {                 //to broadcast to everyone user
   //   from:message.from,
   //   text:message.text,
