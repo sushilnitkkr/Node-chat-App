@@ -5,6 +5,7 @@ const socketIO = require('socket.io');
 const publicPath = path.join(__dirname,'../public');
 var app = express();
 //const port = 3000;
+const {generateMessage} =require('./utils/message');
 var server = http.createServer(app);
 var io = socketIO(server);
 var port = process.env.PORT||  3000;
@@ -16,24 +17,26 @@ io.on('connection',(socket)=>{
   //   createdAt:123
   // });
   // socket.emit from Admin text Welcome to thechat Application
-  socket.emit('newMessage',{
-    from:'Admin',
-    text:'Welcome to the chat app',
-    createdAt: new Date().getTime()
-  });
+  socket.emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
+    // from:'Admin',
+    // text:'Welcome to the chat app',
+    // createdAt: new Date().getTime()
+//  });
   //socket.broadcast.emit from admin text new user joined
-  socket.broadcast.emit('newMessage',{
-    from:'Admin',
-    text:'New User Joined',
-    createdAt: new Date().getTime()
-  });
+  socket.broadcast.emit('newMessage',generateMessage('Admin','New user loined'));
+  // {
+  //   from:'Admin',
+  //   text:'New User Joined',
+  //   createdAt: new Date().getTime()
+  // });
   socket.on('createMessage',(message) => {
   console.log('createMessage',message);
-  io.emit('newMessage',{                 //to broadcast to everyone user
-    from:message.from,
-    text:message.text,
-    createdAt: new Date().getTime()
-  });
+  io.emit('newMessage',generateMessage(message.from, message.text));  // another method to send data
+  // {                 //to broadcast to everyone user
+  //   from:message.from,
+  //   text:message.text,
+  //   createdAt: new Date().getTime()
+  // });
   // socket.broadcast.emit('newMessage',{    // broadcast to all other active user not self
   //   from:message.from,
   //   text:message.text,
