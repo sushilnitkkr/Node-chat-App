@@ -15,6 +15,18 @@ io.on('connection',(socket)=>{
   //   from:'sushile',
   //   createdAt:123
   // });
+  // socket.emit from Admin text Welcome to thechat Application
+  socket.emit('newMessage',{
+    from:'Admin',
+    text:'Welcome to the chat app',
+    createdAt: new Date().getTime()
+  });
+  //socket.broadcast.emit from admin text new user joined
+  socket.broadcast.emit('newMessage',{
+    from:'Admin',
+    text:'New User Joined',
+    createdAt: new Date().getTime()
+  });
   socket.on('createMessage',(message) => {
   console.log('createMessage',message);
   io.emit('newMessage',{                 //to broadcast to everyone user
@@ -22,6 +34,11 @@ io.on('connection',(socket)=>{
     text:message.text,
     createdAt: new Date().getTime()
   });
+  // socket.broadcast.emit('newMessage',{    // broadcast to all other active user not self
+  //   from:message.from,
+  //   text:message.text,
+  //   createdAt: new Date().getTime()
+  // });
   });
   socket.on('disconnect',()=>{
     console.log('User was Disconnected');
