@@ -15,9 +15,9 @@ io.on('connection',(socket)=>{
   //   from:'sushile',
   //   createdAt:123
   // });
-  socket.on('createmessage',(message) => {
-  console.log('createEmail',message);
-  io.emit('newMessage',{
+  socket.on('createMessage',(message) => {
+  console.log('createMessage',message);
+  io.emit('newMessage',{                 //to broadcast to everyone user
     from:message.from,
     text:message.text,
     createdAt: new Date().getTime()
