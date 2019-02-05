@@ -21,6 +21,7 @@
     "socket.io": "^2.2.0",
     "the": "^1.0.2",
     "trick": "0.0.0",
+    "web-midi-api": "^2.0.2",
     "will": "0.0.1"
   },
   "devDependencies": {

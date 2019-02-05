@@ -5,7 +5,7 @@ const socketIO = require('socket.io');
 const publicPath = path.join(__dirname,'../public');
 var app = express();
 //const port = 3000;
-const {generateMessage} =require('./utils/message');
+const {generateMessage,generateLocationMessage} =require('./utils/message');
 var server = http.createServer(app);
 var io = socketIO(server);
 var port = process.env.PORT||  3000;
@@ -43,6 +43,10 @@ callback('This is from server.'); // event acknowledgements
   //   text:message.text,
   //   createdAt: new Date().getTime()
   // });
+  });
+  socket.on('createGeolocationMessage',(coords)=>{    // to send location to all connected user
+    //io.emit('newMessage',generateMessage('Admin',`${coords.latitude},${coords.longitude}` ));
+io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
   });
   socket.on('disconnect',()=>{
     console.log('User was Disconnected');
